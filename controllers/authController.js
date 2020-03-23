@@ -8,8 +8,7 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 //enviamos la peticion
-exports.crearUsuario = async (req, res) => {
-    //console.log(req.body);
+exports.autenticarUsuario = async (req, res) => {
 
     //Revisamos si hubo errores en los check agregados en usuarios
     const errores = validationResult(req);
@@ -21,23 +20,21 @@ exports.crearUsuario = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        //Revisamos que el email registrado no este repetido, ya que esta declarado como unique
+        //Revisamos que el email este registrado
         let usuario = await Usuario.findOne({ email });
-        // Si el email ya estaba registrado
-        if (usuario){
-            return res.status(400).json({ msg: 'El usuario ya existe' });
+        // Si el email no estaba registrado
+        if (!usuario){
+            return res.status(400).json({ msg: 'El usuario no existe' });
         }
 
-        //crea la instancia al nuevo usuario
-        usuario = new Usuario(req.body);
-        
-        //Hashear el password con un salt para que sea unico (por si el usuario pone un password comun)
-        const salt = await bcryptjs.genSalt(10);
-        usuario.password = await bcryptjs.hash(password, salt);
+        //Revisamos que el password ingresado coincida con el registrado
+        let passCorrecto = await bcryptjs.compare(password, usuario.password);
+        // Si el password no estaba registrado
+        if (!passCorrecto){
+            return res.status(400).json({ msg: 'Password incorrecto' });
+        }
 
-        //guardamos el nuevo usuario
-        await usuario.save();
-
+        //Si el login fue correcto
         //Crear y firmar el JSON Web Token
         const payload = {
             usuario: {
@@ -55,12 +52,9 @@ exports.crearUsuario = async (req, res) => {
             res.json({ token }); 
         });
 
-        //Mensaje de confirmacion
-        //res.send('Usuario creado correctamente');
-        //res.json({ msg: 'Usuario creado correctamente' });
-
     } catch(error) {
         console.log(error);
         res.status(400).send('Hubo en error');
-    }  
+    }   
+
 }
