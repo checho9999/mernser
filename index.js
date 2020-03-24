@@ -18,6 +18,7 @@ const PORT = process.env.PORT || 4000;
 //Importamos las rutas...ponemos /api para que sea extendible y por si despues queremos hacer el proyecto web desde el /
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/proyectos', require('./routes/proyectos'));
 
 /*
 //Definimos la pagina principal (probamos que el servidor funciona, y que no informe 'Cannot GET /')

@@ -28,6 +28,7 @@ exports.crearUsuario = async (req, res) => {
             return res.status(400).json({ msg: 'El usuario ya existe' });
         }
 
+        ////Creacion del nuevo usuario////
         //crea la instancia al nuevo usuario
         usuario = new Usuario(req.body);
         
