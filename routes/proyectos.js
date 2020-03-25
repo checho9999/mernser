@@ -1,4 +1,4 @@
-//Rutas para autenticar usuarios
+//Rutas para el CRUD de los proyectos
 const express = require('express');
 const router = express.Router();
 const proyectoController = require('../controllers/proyectoController');
@@ -20,16 +20,17 @@ router.get('/',
     auth,
     proyectoController.obtenerProyectos
 )
+
 //Actualizamos el nombre del proyecto via ID registrado
 router.put('/:id', 
     auth,
     [
-        check('nombre', 'El nombre del proyecto es obligatoio').not().isEmpty()
+        check('nombre', 'El nombre del Proyecto es obligatoio').not().isEmpty()
     ],
     proyectoController.actualizarProyecto
 );
 
-//Eliminamos un Proyecto existente
+//Eliminamos un Proyecto existente via ID registrado
 router.delete('/:id', 
     auth,
     proyectoController.eliminarProyecto

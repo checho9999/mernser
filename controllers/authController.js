@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 //enviamos la peticion
 exports.autenticarUsuario = async (req, res) => {
 
-    //Revisamos si hubo errores en los check agregados en usuarios
+    //Revisamos si hubo errores en los check agregados en auth
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
         return res.status(400).json({ errores: errores.array() });

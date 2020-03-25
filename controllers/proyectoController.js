@@ -48,7 +48,7 @@ exports.obtenerProyectos = async (req, res) => {
 exports.actualizarProyecto = async (req, res) => {
 
     //console.log(req.params.id);
-    // Revisar si hay errores
+    //Revisamos si hubo errores en los check agregados en proyectos
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
         return res.status(400).json({ errores: errores.array() })
@@ -59,7 +59,7 @@ exports.actualizarProyecto = async (req, res) => {
     //creamos esta variable para sobrescribir el proyecto existente
     const nuevoProyecto = {};
     
-    //Si el nombre esta registrado
+    //Si el nombre esta informado
     if (nombre) {
         nuevoProyecto.nombre = nombre;
     }
