@@ -58,3 +58,20 @@ exports.autenticarUsuario = async (req, res) => {
     }   
 
 }
+
+//Obtenemos que usuario esta autenticado
+exports.usuarioAutenticado = async ( req, res ) => {
+
+    try {
+
+        //Obtenemos los datos desde el usuario ignorando solo su password
+        const usuario = await Usuario.findById(req.usuario.id).select('-password');
+        res.json({usuario});
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({msg: 'Hubo un error'});
+    }
+
+}
