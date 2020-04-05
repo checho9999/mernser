@@ -44,7 +44,9 @@ exports.obtenerTareas = async (req, res) => {
 
     try {
         //Extraemos los datos del proyecto desde el body
-        const { proyecto } = req.body;
+        //const { proyecto } = req.body;
+        //Extraemos los datos del proyecto desde el query, porque enviamos el proyecto por params
+        const { proyecto } = req.query;
 
         //Verificamos si el proyecto existe
         const existeProyecto = await Proyecto.findById(proyecto);
@@ -92,7 +94,9 @@ exports.actualizarTarea = async (req, res ) => {
 
         //creamos esta variable para sobrescribir la tarea existente con los datos del body
         const nuevaTarea = {};
+        //if (nombre) nuevaTarea.nombre = nombre;
         nuevaTarea.nombre = nombre;
+        //if (estado) nuevaTarea.estado = estado;        
         nuevaTarea.estado = estado;
 
         //actualizamos la tarea con el nuevo estado o el nuevo nombre o con ambos
@@ -110,7 +114,9 @@ exports.actualizarTarea = async (req, res ) => {
 exports.eliminarTarea = async (req, res) => {
     try {
         //Extraemos los datos del proyecto desde el body
-        const { proyecto  } = req.body;
+        //const { proyecto  } = req.body;
+        //Extraemos los datos del proyecto desde el query, porque enviamos el proyecto por params
+        const { proyecto } = req.query;    
 
         //Buscamos la tarea para ver si esta registrada
         let tarea = await Tarea.findById(req.params.id);
